@@ -21,30 +21,44 @@
             renderer.setSize( window.innerWidth, window.innerHeight );
             document.body.appendChild( renderer.domElement );
 
-            const material = new THREE.LineBasicMaterial( { color: 0x0000ff } );
+            points = [];
 
-            const points = [];
-            points.push( new THREE.Vector3( 0, 0, 0 ) );
-            points.push( new THREE.Vector3( 0, 0, 10 ) );
-            points.push( new THREE.Vector3( 0, 10, 10 ) );
-            points.push( new THREE.Vector3( 0, 10, 0 ) );
-            points.push( new THREE.Vector3( 0, 0, 0 ) );
-            points.push( new THREE.Vector3( 10, 0, 0 ) );
-            points.push( new THREE.Vector3( 10, 10, 0 ) );
-            points.push( new THREE.Vector3( 0, 10, 0 ) );
-            points.push( new THREE.Vector3( 10, 10, 0 ) );
-            points.push( new THREE.Vector3( 10, 10, 10 ) );
-            points.push( new THREE.Vector3( 0, 10, 10 ) );
-            points.push( new THREE.Vector3( 0, 0, 10 ) );
-            points.push( new THREE.Vector3( 10, 0, 10 ) );
-            points.push( new THREE.Vector3( 10, 0, 0 ) );
-            points.push( new THREE.Vector3( 10, 0, 10 ) );
-            points.push( new THREE.Vector3( 10, 10, 10 ) );
+            for (let x = 0; x < 10; x++) {
+                for (let y = 0; y < 10; y++) {
+                    for (let z = 0; z < 10; z++) {
+                        points.push(new THREE.Vector3(x, y + 1, z));
+                        points.push(new THREE.Vector3(x + 1, y + 1, z));
+                        points.push(new THREE.Vector3(x + 1, y, z));
+                        points.push(new THREE.Vector3(x, y, z));
+                        points.push(new THREE.Vector3(x, y + 1, z));
+                        points.push(new THREE.Vector3(x, y + 1, z + 1));
+                        points.push(new THREE.Vector3(x, y, z + 1));
+                        points.push(new THREE.Vector3(x, y, z));
+                        points.push(new THREE.Vector3(x, y, z + 1));
+                        points.push(new THREE.Vector3(x + 1, y, z + 1));
+                        points.push(new THREE.Vector3(x + 1, y, z));
+                        
+                        if (y == 9) {
+                            points.push(new THREE.Vector3(x + 1, y + 1, z));
+                            points.push(new THREE.Vector3(x + 1, y + 1, z + 1));
+                            points.push(new THREE.Vector3(x, y + 1, z + 1));
+                            points.push(new THREE.Vector3(x + 1, y + 1, z + 1));
+                            points.push(new THREE.Vector3(x + 1, y + 1, z));
+                            points.push(new THREE.Vector3(x + 1, y, z));
+                        }
 
-            const geometry = new THREE.BufferGeometry().setFromPoints( points );
-            const box = new THREE.Line( geometry, material );
+                        if (x == 9 || z == 9) {
+                            points.push(new THREE.Vector3(x + 1, y, z + 1));
+                            points.push(new THREE.Vector3(x + 1, y + 1, z + 1));
 
-            scene.add( box );
+                        }
+
+                        geometry = new THREE.BufferGeometry().setFromPoints( points );
+                        scene.add( new THREE.Line( geometry, new THREE.LineBasicMaterial( { color: new THREE.Color("rgb(" + (x + 2) * 19 + ", " + (y + 2) * 19 + ", " + (z + 2) * 19 + ")") } ) ) );
+                        points = [];
+                    }
+                }
+            }
 
             
 
