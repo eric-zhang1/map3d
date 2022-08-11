@@ -21,46 +21,70 @@
             renderer.setSize( window.innerWidth, window.innerHeight );
             document.body.appendChild( renderer.domElement );
 
-            points = [];
-
             for (let x = 0; x < 10; x++) {
                 for (let y = 0; y < 10; y++) {
                     for (let z = 0; z < 10; z++) {
-                        points.push(new THREE.Vector3(x, y + 1, z));
-                        points.push(new THREE.Vector3(x + 1, y + 1, z));
-                        points.push(new THREE.Vector3(x + 1, y, z));
+                        color = "rgb(" + (x + 2) * 19 + ", " + (y + 2) * 19 + ", " + (z + 2) * 19 + ")";
+                        points = [];
                         points.push(new THREE.Vector3(x, y, z));
+                        points.push(new THREE.Vector3(x + 1, y, z));
+                        points.push(new THREE.Vector3(x + 1, y + 1, z));
                         points.push(new THREE.Vector3(x, y + 1, z));
-                        points.push(new THREE.Vector3(x, y + 1, z + 1));
+                        points.push(new THREE.Vector3(x, y, z));
+                        graph(new THREE.BufferGeometry().setFromPoints( points ), color);
+
+                        points = [];
+                        points.push(new THREE.Vector3(x, y, z));
                         points.push(new THREE.Vector3(x, y, z + 1));
+                        points.push(new THREE.Vector3(x, y + 1, z + 1));
+                        points.push(new THREE.Vector3(x, y + 1, z));
+                        points.push(new THREE.Vector3(x, y, z));
+                        graph(new THREE.BufferGeometry().setFromPoints( points ), color);
+
+                        points = [];
                         points.push(new THREE.Vector3(x, y, z));
                         points.push(new THREE.Vector3(x, y, z + 1));
                         points.push(new THREE.Vector3(x + 1, y, z + 1));
                         points.push(new THREE.Vector3(x + 1, y, z));
+                        points.push(new THREE.Vector3(x, y, z));
+                        graph(new THREE.BufferGeometry().setFromPoints( points ), color);
                         
                         if (y == 9) {
-                            points.push(new THREE.Vector3(x + 1, y + 1, z));
-                            points.push(new THREE.Vector3(x + 1, y + 1, z + 1));
+                            points = [];
+                            points.push(new THREE.Vector3(x, y + 1, z));
                             points.push(new THREE.Vector3(x, y + 1, z + 1));
                             points.push(new THREE.Vector3(x + 1, y + 1, z + 1));
                             points.push(new THREE.Vector3(x + 1, y + 1, z));
-                            points.push(new THREE.Vector3(x + 1, y, z));
+                            points.push(new THREE.Vector3(x, y + 1, z));
+                            graph(new THREE.BufferGeometry().setFromPoints( points ), color);
                         }
 
-                        if (x == 9 || z == 9) {
+                        if (x == 9) {
+                            points = [];
                             points.push(new THREE.Vector3(x + 1, y, z + 1));
                             points.push(new THREE.Vector3(x + 1, y + 1, z + 1));
-
+                            points.push(new THREE.Vector3(x + 1, y + 1, z));
+                            points.push(new THREE.Vector3(x + 1, y, z));
+                            points.push(new THREE.Vector3(x + 1, y, z + 1));
+                            graph(new THREE.BufferGeometry().setFromPoints( points ), color);
                         }
 
-                        geometry = new THREE.BufferGeometry().setFromPoints( points );
-                        scene.add( new THREE.Line( geometry, new THREE.LineBasicMaterial( { color: new THREE.Color("rgb(" + (x + 2) * 19 + ", " + (y + 2) * 19 + ", " + (z + 2) * 19 + ")") } ) ) );
-                        points = [];
+                        if (z == 9) {
+                            points = [];
+                            points.push(new THREE.Vector3(x + 1, y, z + 1));
+                            points.push(new THREE.Vector3(x + 1, y + 1, z + 1));
+                            points.push(new THREE.Vector3(x, y + 1, z + 1));
+                            points.push(new THREE.Vector3(x + 1, y, z + 1));
+                            points.push(new THREE.Vector3(x + 1, y, z + 1));
+                            graph(new THREE.BufferGeometry().setFromPoints( points ), color);
+                        }
                     }
                 }
             }
 
-            
+            function graph(g, c) {
+                scene.add( new THREE.Mesh( g, new THREE.MeshBasicMaterial( { color: new THREE.Color(c) } ) ) );
+            }
 
             function animate() {
                 requestAnimationFrame( animate );
