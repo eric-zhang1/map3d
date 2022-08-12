@@ -14,19 +14,20 @@
 			const scene = new THREE.Scene();
             const camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 500 );
 
-            camera.position.set( -5, 13, 30 );
-            camera.lookAt( 6, 4, 5 );
+            camera.position.set( -25, 65, 150 );
+            camera.lookAt( 30, 20, 25 );
             
             const renderer = new THREE.WebGLRenderer();
             renderer.setSize( window.innerWidth, window.innerHeight );
             document.body.appendChild( renderer.domElement );
 
+
             for (let x = 0; x < 10; x++) {
                 for (let y = 0; y < 10; y++) {
                     for (let z = 0; z < 10; z++) {
-                        material = new THREE.MeshBasicMaterial({color : "rgb(" + (x + 2) * 19 + ", " + (y + 2) * 19 + ", " + (z + 2) * 19 + ")"})
+                        material = new THREE.MeshBasicMaterial({color : "rgb(" + (x + 2) * 19 + ", " + (y + 2) * 19 + ", " + (z + 2) * 19 + ")"});
                         material.transparent = true;
-                        material.opacity = 0.5;
+                        material.opacity = 0.8;
                         cube = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), material);
                         cube.position.x = x;
                         cube.position.y = y;
