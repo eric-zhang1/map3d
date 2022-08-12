@@ -24,66 +24,16 @@
             for (let x = 0; x < 10; x++) {
                 for (let y = 0; y < 10; y++) {
                     for (let z = 0; z < 10; z++) {
-                        color = "rgb(" + (x + 2) * 19 + ", " + (y + 2) * 19 + ", " + (z + 2) * 19 + ")";
-                        points = [];
-                        points.push(new THREE.Vector3(x, y, z));
-                        points.push(new THREE.Vector3(x + 1, y, z));
-                        points.push(new THREE.Vector3(x + 1, y + 1, z));
-                        points.push(new THREE.Vector3(x, y + 1, z));
-                        points.push(new THREE.Vector3(x, y, z));
-                        graph(new THREE.BufferGeometry().setFromPoints( points ), color);
-
-                        points = [];
-                        points.push(new THREE.Vector3(x, y, z));
-                        points.push(new THREE.Vector3(x, y, z + 1));
-                        points.push(new THREE.Vector3(x, y + 1, z + 1));
-                        points.push(new THREE.Vector3(x, y + 1, z));
-                        points.push(new THREE.Vector3(x, y, z));
-                        graph(new THREE.BufferGeometry().setFromPoints( points ), color);
-
-                        points = [];
-                        points.push(new THREE.Vector3(x, y, z));
-                        points.push(new THREE.Vector3(x, y, z + 1));
-                        points.push(new THREE.Vector3(x + 1, y, z + 1));
-                        points.push(new THREE.Vector3(x + 1, y, z));
-                        points.push(new THREE.Vector3(x, y, z));
-                        graph(new THREE.BufferGeometry().setFromPoints( points ), color);
-                        
-                        if (y == 9) {
-                            points = [];
-                            points.push(new THREE.Vector3(x, y + 1, z));
-                            points.push(new THREE.Vector3(x, y + 1, z + 1));
-                            points.push(new THREE.Vector3(x + 1, y + 1, z + 1));
-                            points.push(new THREE.Vector3(x + 1, y + 1, z));
-                            points.push(new THREE.Vector3(x, y + 1, z));
-                            graph(new THREE.BufferGeometry().setFromPoints( points ), color);
-                        }
-
-                        if (x == 9) {
-                            points = [];
-                            points.push(new THREE.Vector3(x + 1, y, z + 1));
-                            points.push(new THREE.Vector3(x + 1, y + 1, z + 1));
-                            points.push(new THREE.Vector3(x + 1, y + 1, z));
-                            points.push(new THREE.Vector3(x + 1, y, z));
-                            points.push(new THREE.Vector3(x + 1, y, z + 1));
-                            graph(new THREE.BufferGeometry().setFromPoints( points ), color);
-                        }
-
-                        if (z == 9) {
-                            points = [];
-                            points.push(new THREE.Vector3(x + 1, y, z + 1));
-                            points.push(new THREE.Vector3(x + 1, y + 1, z + 1));
-                            points.push(new THREE.Vector3(x, y + 1, z + 1));
-                            points.push(new THREE.Vector3(x + 1, y, z + 1));
-                            points.push(new THREE.Vector3(x + 1, y, z + 1));
-                            graph(new THREE.BufferGeometry().setFromPoints( points ), color);
-                        }
+                        material = new THREE.MeshBasicMaterial({color : "rgb(" + (x + 2) * 19 + ", " + (y + 2) * 19 + ", " + (z + 2) * 19 + ")"})
+                        material.transparent = true;
+                        material.opacity = 0.5;
+                        cube = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), material);
+                        cube.position.x = x;
+                        cube.position.y = y;
+                        cube.position.z = z;
+                        scene.add(cube);
                     }
                 }
-            }
-
-            function graph(g, c) {
-                scene.add( new THREE.Mesh( g, new THREE.MeshBasicMaterial( { color: new THREE.Color(c) } ) ) );
             }
 
             function animate() {
